@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from streamlit_agraph import agraph, Node, Edge, Config
+from streamlit_agraph import agraph, Node, Config
 
 # Page Configuration
 st.set_page_config(layout="wide", page_title="Data Center Compliance Dashboard")
@@ -21,33 +21,25 @@ col4.write("**Status:** EXPORT READY")
 
 st.divider()
 
-# --- Topology Section with Custom SVG ---
-st.markdown("### Data Center Topology View")
+# --- Single Topology Node ---
+st.markdown("### Facility Overview")
 
 nodes = [
-    Node(id="DC", label="Frankfurt DC-04", size=50, shape="image", image=svg_icon),
-    Node(id="SRV", label="Compute Node", size=40, shape="image", image=svg_icon),
-    Node(id="NET", label="Network Edge", size=40, shape="image", image=svg_icon)
+    Node(id="DC", label="Frankfurt DC-04", size=100, shape="image", image=svg_icon)
 ]
 
-edges = [
-    Edge(source="DC", target="SRV", label="Compute Path"),
-    Edge(source="SRV", target="NET", label="Uplink")
-]
+# No edges needed for a single node
+edges = []
 
 config = Config(
     width=800, 
-    height=400, 
-    directed=True, 
-    physics=True, 
-    backgroundColor="#ffffff",
-    nodeHighlightBehavior=True
+    height=300, 
+    directed=False, 
+    physics=False,  # Set to false to keep the node centered
+    backgroundColor="#ffffff"
 )
 
-clicked_node = agraph(nodes=nodes, edges=edges, config=config)
-
-if clicked_node:
-    st.info(f"Selected Asset: {clicked_node}")
+agraph(nodes=nodes, edges=edges, config=config)
 
 st.divider()
 
@@ -58,7 +50,7 @@ m2.metric("WUE", "0.18 L/kWh", "Optimal")
 m3.metric("ERF", "11.4 %", "8,259 MWh")
 m4.metric("Renewable", "100 %", "PPA")
 
-# --- Tables ---
+# --- Data Tables ---
 col_left, col_right = st.columns(2)
 
 with col_left:
