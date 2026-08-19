@@ -5,18 +5,6 @@ from streamlit_agraph import agraph, Node, Config
 # Page Configuration
 st.set_page_config(layout="wide", page_title="Data Center Compliance Dashboard")
 
-# CSS to ensure the Graph Label is visible (White text)
-st.markdown("""
-    <style>
-    /* Force white text on the graph labels */
-    .vis-network div.vis-label {
-        color: white !important;
-        font-weight: bold;
-        text-shadow: 1px 1px 2px black; /* Add shadow to ensure readability on white bg */
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 # Assets Configuration
 base_url = "https://raw.githubusercontent.com/johnmoncisco/splunkecdashboard/main/assets/"
 svg_icon = base_url + "dc-svg.svg"
@@ -24,24 +12,32 @@ svg_icon = base_url + "dc-svg.svg"
 # Header Section
 st.title("splunk> enterprise")
 st.subheader("EU EED & EnEfG Compliance Monitoring Dashboard")
-
 st.divider()
 
-# --- Single Topology Node (Larger) ---
+# --- Custom Centered Label & Topology ---
 st.markdown("### Facility Overview")
 
+# 1. Manually render the label as an HTML/CSS centered element for top-center placement
+st.markdown("""
+    <div style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: -20px; color: #333;">
+        Frankfurt DC-04
+    </div>
+""", unsafe_allow_html=True)
+
+# 2. Node has label="" to avoid overlapping with our manual label
 nodes = [
-    Node(id="DC", label="Frankfurt DC-04", size=200, shape="image", image=svg_icon)
+    Node(id="DC", label="", size=200, shape="image", image=svg_icon)
 ]
 
 config = Config(
     width=800, 
-    height=400, 
+    height=300, 
     directed=False, 
     physics=False, 
     backgroundColor="#ffffff"
 )
 
+# Render the graph
 agraph(nodes=nodes, edges=[], config=config)
 
 st.divider()
