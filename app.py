@@ -14,31 +14,34 @@ st.title("splunk> enterprise")
 st.subheader("EU EED & EnEfG Compliance Monitoring Dashboard")
 st.divider()
 
-# --- Custom Centered Label & Topology ---
+# --- Centered Facility Header & Graph ---
 st.markdown("### Facility Overview")
 
-# 1. Manually render the label as an HTML/CSS centered element for top-center placement
-st.markdown("""
-    <div style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: -20px; color: #333;">
-        Frankfurt DC-04
-    </div>
-""", unsafe_allow_html=True)
+# Use a container to group the label and image together
+with st.container():
+    # Centered Label with enough top margin to prevent overlap
+    st.markdown("""
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+            <h2 style="color: #2c3e50; margin: 0;">Frankfurt DC-04</h2>
+        </div>
+    """, unsafe_allow_html=True)
 
-# 2. Node has label="" to avoid overlapping with our manual label
-nodes = [
-    Node(id="DC", label="", size=200, shape="image", image=svg_icon)
-]
+    # Node configuration - label is empty because we added it via HTML above
+    nodes = [
+        Node(id="DC", label="", size=200, shape="image", image=svg_icon)
+    ]
 
-config = Config(
-    width=800, 
-    height=300, 
-    directed=False, 
-    physics=False, 
-    backgroundColor="#ffffff"
-)
+    # Configure graph with enough height to prevent clipping
+    config = Config(
+        width=800, 
+        height=300, 
+        directed=False, 
+        physics=False, 
+        backgroundColor="#ffffff"
+    )
 
-# Render the graph
-agraph(nodes=nodes, edges=[], config=config)
+    # Render graph
+    agraph(nodes=nodes, edges=[], config=config)
 
 st.divider()
 
