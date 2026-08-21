@@ -23,7 +23,7 @@ st.markdown("### EU EED & EnEfG Compliance Monitoring Dashboard")
 st.caption("LIVE STREAMING | App: Environmental_Telemetry_v3 | User: m.vance@nexuscloud.eu")
 st.divider()
 
-# --- Top Row: Facility & Mandate ---
+# --- Top Row: Metadata ---
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("FACILITY ID", "EED-DE-8839201")
 c2.metric("REGULATORY MANDATE", "EED Reg 2024/1364")
@@ -53,6 +53,13 @@ with col_right:
         "Metric": ["Facility Energy Input", "IT Equipment Load", "Cooling Plant Load", "Exported Waste Heat"],
         "MWH (YTD)": [72450.00, 58427.42, 9820.10, 8259.30],
         "Status": ["VALIDATED", "VALIDATED", "ACTIVE", "OFF-TAKING"]
+    }))
+
+    st.subheader("EED ICT Capacity & Network Telemetry Summary")
+    st.table(pd.DataFrame({
+        "Metric Name": ["Active Physical Servers", "Raw Provisioned Storage", "Edge Router Interconnect", "Annual Ingress Volume", "Annual Egress Volume"],
+        "Aggregated Value": ["14,280", "184.50", "800.00", "1.12", "1.48"],
+        "Unit": ["Units", "PB", "Gbps", "EB", "EB"]
     }))
 
 # --- Bottom Row: Submission Pipeline ---
